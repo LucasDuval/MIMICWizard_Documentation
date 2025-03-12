@@ -1,0 +1,15 @@
+.logo-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.wy-nav-content {
+    max-width: 100%;
+}
+
+.er-schema{
+    max-width: 100%;
+    max-height: 398px;
+    aspect-ratio: 554 / 398;
+}
