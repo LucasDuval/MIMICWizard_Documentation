@@ -1,9 +1,6 @@
-Template for the Read the Docs tutorial
+MIMICWizard Documentation Source Code
 =======================================
 
-This GitHub template includes fictional Python library
-with some basic Sphinx docs.
+Documentation is available online at https://mimicwizard.readthedocs.io/
 
-Read the tutorial here:
-
-https://docs.readthedocs.io/en/stable/tutorial/
+Feel free to open issue and merge request for any issue you may encounter installing the application and using the documentation
