@@ -79,7 +79,14 @@ Import MIMIC-IV full version to your PostgreSQL server
 ******************************************************
 In order to host the full database, please follow the guide edited by the Physionet repository : `Buid MIMIC (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/buildmimic/postgres>`_.
 
+
+
 The application also need extra derived table provided by MIT-LCP. The installation procedure is available in the `Concepts Postgres (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/concepts_postgres>`_ folder.
+
+.. tip:: 
+
+   Windows user will need to install `gzip <https://gnuwin32.sourceforge.net/packages/gzip.htm>`_ and add gzip and postgresql to the PATH environment variable.
+   Postgres run command with your windows user as default, you should add the argument `-U postgres` to use the default postgres user.
 
 Start MIMICWizard
 ******************
