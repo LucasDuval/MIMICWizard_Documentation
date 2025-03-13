@@ -21,8 +21,8 @@ That's why MIMICWizard is offering the possibilitiy to use demo database which c
 
 **Requirements** 
 
-* PostgreSQL Portable v15 (or greater)
-* R version 4.2 (or greater)
+* PostgreSQL v15 (or greater)
+* R version 4.4
 * MIMIC-IV Clinical Database files `demo file <https://physionet.org/content/mimic-iv-demo/>`_ or request a `full access <https://mimic.mit.edu/docs/gettingstarted/>`_
 
 .. warning::
@@ -34,7 +34,7 @@ You can follow the installation instructions on the getting started page.
 
 Changelog
 *********
-
+0.6.4 (2025-03-13) Initial public release
 
 Research and development team
 *****************************

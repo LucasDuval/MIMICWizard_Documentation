@@ -7,64 +7,50 @@ Before starting you should keep in mind that MIMICWizard is divided in 2 part, t
 
 Install the local application (Run from RStudio or R CLI)
 *********************************************************
-*Theses instructions are not the recommended way to install the app. However it offers a fast way to preview its capabilities*
+*Theses instructions are the simplest way to get MIMICWizard running, but it's not the way it is intended to be hosted and distributd to multiple users in your organization*
 
 You can download the MIMICWizard **source code** using git or directly by zip downloading from GitHub.
 
 .. code-block:: bash
 
-   git clone https://github.com/DangerousWizardry/rtd-demo-documentation.git
+   git clone <not_available_yet>
 
-In order to install the app, you'll need to have **R 4.2 (or greater)** installed `R official repository (CRAN) <https://cran.r-project.org/mirrors.html>`_ 
+In order to install the app, you'll need to have **R 4.4** installed `R official repository (CRAN) <https://cran.r-project.org/mirrors.html>`_ 
 
-Open a new R terminal and run the following command to **install renv**, a R package manager used in MIMICWizard.
+For Windows user, you need to install Rtools to compile some of the packages, available on the `Rtools official repository <https://cran.r-project.org/bin/windows/Rtools/>`_
 
-.. code-block:: r
+Once R is installed, open a terminal in the project directory (i.e. in the app/ folder) and run the following command to install the required packages :
 
-   install.package("renv")
+.. code-block:: bash
 
-
-Once the package renv is installed you have to **set the current R working directory** where you've downloaded and unziped / cloned the app source code.
-
-.. code-block:: r
-
-   setwd("/path/to/the/mimicwizard/sourcecode")
-
-Then **activate renv and install** the required packages
-
-.. code-block:: r
-
-   # Activate the library manager in the current working directory
-   renv::activate()
-   # Read the renv lockfile to install the needed library
-   renv::install()
-
-This step should take a few minutes, go grab a coffee ☕
-
-Your coffee is finished but the package installation is still ongoing ? Don't worry, you can now `install the PostgreSQL server <Run MIMIC-IV demo on a portable database_>`_ that will hold the demo database
-
-*Note that it's possible to host the full MIMIC-IV database in the portable version but it's not recommended for hosted version*
-
-Once all the packages are downloaded and installed, **MIMICWizard is ready**. You just have to **make sure your database is running** and run :
-
-.. code-block:: r
-
-   shiny::runApp()
-
-.. tip:: 
-
-   Use the Init Demo procedure on the application homepage the first time you connect to the database with MIMICWizard. This procedure will use the file in the demo folder to populate your database. Once it has been done one time, you could use the run demo procedure.
-
-If you leave the app and want to run it again, don't forget to **set your working directory to the app directory** before executing ``shiny::runApp()`` and to **run your database**.
+   R -e "renv::restore()"
 
 
+This step should take a few minutes, go grab a coffee ☕ 
 
-Run MIMIC-IV demo on a portable database
-****************************************
+Your coffee is finished but the package installation is still ongoing ? Don't worry, you can carry to the next step and let the installation finish in the background.
+
+Now you need to install the **PostgreSQL server** that will hold the database. 
+
+You can download the latest version of PostgreSQL with your favorite package manager for UNIX user or on the `PostgreSQL official repository <https://www.postgresql.org/download/>`_ for windows user.
+
 .. note::
-   In order to get quick setup database, I recommend using `PostgreSQL Portable <https://github.com/rsubr/postgresql-portable>`_ (originally developed by ``garethflowers``, kept up-o-date by ``rsubr``) which, as is name discreetly suggest is a portable implementation of a PostgreSQL database manager.
 
-* Download `PostgreSQL Portable (v14 or greater) <https://github.com/rsubr/postgresql-portable>`_ via ``git clone`` or a direct download then unzip
+   Alternatively, Windows 10 users (Windows 11 is not supported) can use `PostgreSQL Portable <https://github.com/rsubr/postgresql-portable>`_ (originally developed by ``garethflowers``, kept up-o-date by ``rsubr``) which, as is name discreetly suggest is a portable implementation of a PostgreSQL database manager.
+   *Note that it's possible to host the full MIMIC-IV database in the portable version but it's not recommended due to performance issue*
+
+You should then import the MIMIC-IV database in your PostgreSQL server.
+
+There's now two choices :
+
+* `Use  MIMIC-IV demo <Import MIMIC-IV demo to your PostgreSQL server_>`_ 
+
+* `Use  MIMIC-IV demo <Import MIMIC-IV full version to your PostgreSQL server_>`_ 
+
+
+Import MIMIC-IV demo to your PostgreSQL server
+**********************************************
+
 * Download the MIMIC-IV demo database available on the `Physionet Repository - MIMIC-IV Clinical Database demo <https://physionet.org/content/mimic-iv-demo/>`_ (the download button is at the bottom of the page).
 * Unzip the database in the demo folder at the MIMICWizard root repository
 
@@ -85,29 +71,31 @@ Your MIMICWizard root repository should now look like that
 
 If it's the case that's perfect, you just have to run ``PostgreSQLPortable.exe`` before launching the app and that's it, your demo database will be automatically populated on MIMICWizard startup.
 
+.. tip:: 
 
-Host the application on your infrastructure
-*********************************************************
-You can host MIMICWizard using `Posit Shiny Server <https://posit.co/download/shiny-server/>`_ 
+   Use the Init Demo procedure on the application homepage the first time you connect to the database with MIMICWizard. This procedure will use the file in the demo folder to populate your database. Once it has been done one time, you could use the run demo procedure.
 
-They provide a detailed documentation about how to deploy a Shiny Application in their `Administrator Guide <https://docs.posit.co/shiny-server/>`_
-The combination of the current page and the Posit documentation should be sufficient to deploy MIMICWizard considering your infrastructure modalities.
-
-
-.. danger:: MIMICWizard has not been build to be injection-free and without vunerabilities. As a result, **I strongly discourage to distribute this app on a public infrastructure.**
-   
-   Also, I recommend to give **read-only rights to the database user** you're using in the app **on MIMIC-IV Data**.
-   Note that database user should have writing right on public schema as its mandatory for app content to work as intented.
-
-Host the full database
-*************************
+Import MIMIC-IV full version to your PostgreSQL server
+******************************************************
 In order to host the full database, please follow the guide edited by the Physionet repository : `Buid MIMIC (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/buildmimic/postgres>`_.
 
 The application also need extra derived table provided by MIT-LCP. The installation procedure is available in the `Concepts Postgres (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/concepts_postgres>`_ folder.
 
-Once you've installed the complete MIMIC-IV database, you need to install the internal data table needed by MIMICWizard. Install the using the script available `here <assets/mimicwizard_internal_init.sql>`_
+Start MIMICWizard
+******************
+
+Once you've installed the atabase, you need to install the internal data table needed by MIMICWizard. Install the using the script available `here <assets/mimicwizard_internal_init.sql>`_
 
 Now you're database is ready to work with MIMICWizard, configure the correct authentification parameters in the configuration file (details below) to make the final link between database and application.
+
+Once all the packages are downloaded and installed, database is loaded, and `configuration file <Configuration file_>`_ configured, **MIMICWizard is ready**. 
+
+**Make sure your database is running**, cd to the app directory and run :
+
+.. code-block:: bash
+
+   R -e "shiny::runApp()"
+
 
 Configuration file
 *************************
@@ -147,3 +135,17 @@ The configuration file is located at the root of MIMIWizard folder. This file is
 | **DEMO_USER**,       |                                           |                                                                                                                                                                  |
 | **DEMO_PASSWORD**    |                                           |                                                                                                                                                                  |
 +----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+Host the application on your infrastructure
+*********************************************************
+You can host MIMICWizard using `Posit Shiny Server <https://posit.co/download/shiny-server/>`_ 
+
+They provide a detailed documentation about how to deploy a Shiny Application in their `Administrator Guide <https://docs.posit.co/shiny-server/>`_
+The combination of the current page and the Posit documentation should be sufficient to deploy MIMICWizard considering your infrastructure modalities.
+
+
+.. danger:: MIMICWizard has not been build to be injection-free and without vunerabilities. As a result, **I strongly discourage to distribute this app on a public infrastructure.**
+   
+   Also, I recommend to give **read-only rights to the database user** you're using in the app **on MIMIC-IV Data**.
+   Note that database user should have writing right on public schema as its mandatory for app content to work as intented.
