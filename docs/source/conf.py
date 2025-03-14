@@ -26,7 +26,7 @@ master_doc = 'contents'
 source_suffix = '.rst'
 
 templates_path = ['_templates']
-html_static_path = ['assets']
+html_static_path = ['assets/']
 html_css_files = ['custom.css']
 
 html_sidebars = {
