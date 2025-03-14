@@ -79,7 +79,7 @@ Import MIMIC-IV full version to your PostgreSQL server
 ******************************************************
 In order to host the full database, we recommend you following the process below (adapted from mimic-code repository).
 
-.. code-block::
+.. code-block:: bash
    # clone repo
    git clone https://github.com/MIT-LCP/mimic-code.git
    cd mimic-code
@@ -93,9 +93,12 @@ In order to host the full database, we recommend you following the process below
    psql -d mimiciv -v ON_ERROR_STOP=1 -v mimic_data_dir=mimiciv/2.2 -f mimic-iv/buildmimic/postgres/index.sql
    cd mimic-iv/concepts_postgres/ | psql -d mimiciv -f  postgres-make-concepts.sql
 
+If you can't use wget, you can download the data manually from `Physionet Repository - MIMIC-IV Clinical Database <https://physionet.org/content/mimic-iv/2.2/>`_ and put the data in the mimiciv/2.2 folder.
+You may need to adapt this sample code depending on your configuration
+
 .. tip:: 
 
-   Windows user will need to install `gzip <https://gnuwin32.sourceforge.net/packages/gzip.htm>`_ and add gzip and postgresql to the PATH environment variable.
+   Windows user will need to install `gzip <https://gnuwin32.sourceforge.net/packages/gzip.htm>`_ and add gzip and postgresql binaries to the PATH environment variable.
    Postgres run command with your windows user as default, you should add the argument `-U postgres` to use the default postgres user.
    If you have any trouble with installation you can refer to the original MIMIC Documentation `Buid MIMIC (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/buildmimic/postgres>`_
 
