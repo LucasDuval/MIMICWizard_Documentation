@@ -77,16 +77,27 @@ If it's the case that's perfect, you just have to run ``PostgreSQLPortable.exe``
 
 Import MIMIC-IV full version to your PostgreSQL server
 ******************************************************
-In order to host the full database, please follow the guide edited by the Physionet repository : `Buid MIMIC (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/buildmimic/postgres>`_.
+In order to host the full database, we recommend you following the process below (adapted from mimic-code repository).
 
-
-
-The application also need extra derived table provided by MIT-LCP. The installation procedure is available in the `Concepts Postgres (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/concepts_postgres>`_ folder.
+.. code-block::
+   # clone repo
+   git clone https://github.com/MIT-LCP/mimic-code.git
+   cd mimic-code
+   # download data
+   wget -r -N -c -np --user <USERNAME> --ask-password https://physionet.org/files/mimiciv/2.2/
+   mv physionet.org/files/mimiciv mimiciv && rmdir physionet.org/files && rm physionet.org/robots.txt && rmdir physionet.org
+   createdb mimiciv
+   psql -d mimiciv -f mimic-iv/buildmimic/postgres/create.sql
+   psql -d mimiciv -v ON_ERROR_STOP=1 -v mimic_data_dir=mimiciv/2.2 -f mimic-iv/buildmimic/postgres/load_gz.sql
+   psql -d mimiciv -v ON_ERROR_STOP=1 -v mimic_data_dir=mimiciv/2.2 -f mimic-iv/buildmimic/postgres/constraint.sql
+   psql -d mimiciv -v ON_ERROR_STOP=1 -v mimic_data_dir=mimiciv/2.2 -f mimic-iv/buildmimic/postgres/index.sql
+   cd mimic-iv/concepts_postgres/ | psql -d mimiciv -f  postgres-make-concepts.sql
 
 .. tip:: 
 
    Windows user will need to install `gzip <https://gnuwin32.sourceforge.net/packages/gzip.htm>`_ and add gzip and postgresql to the PATH environment variable.
    Postgres run command with your windows user as default, you should add the argument `-U postgres` to use the default postgres user.
+   If you have any trouble with installation you can refer to the original MIMIC Documentation `Buid MIMIC (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/buildmimic/postgres>`_
 
 Start MIMICWizard
 ******************
@@ -114,6 +125,9 @@ The configuration file is located at the root of MIMIWizard folder. This file is
 +======================+===========================================+==================================================================================================================================================================+
 | **INTERACTIVE**      | - TRUE                                    | Do you want to activate the application landing page where user can choose if he want to use demo or hosted database. Should be disabled for hosted application. |
 |                      | - FALSE                                   |                                                                                                                                                                  |
++----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **IS_ED_LOADED**     | - TRUE                                    | Is MIMICIV ED schema loaded ? This add new information in the patient explorer tab for patient with an emergency admission path                                  |
+|                      | - FALSE                                   | Keep this to false f you're using MIMICIV demo                                                                                                                   |
 +----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **CACHE_DIR**        | empty string or <path/to/cache/folder>    | Repository where the application cache object are written                                                                                                        |
 |                      |                                           | Default "" create a cache folder in the application directory                                                                                                    |
