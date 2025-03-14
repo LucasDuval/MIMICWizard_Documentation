@@ -38,16 +38,14 @@ Changelog
 
 Research and development team
 *****************************
-
-This application was originally developed by the Common Research Laboratory of Edouard Herriot Hospital (Laboratoire Commun de Recherche - HCL-bioMérieux, Lyon, France).
-
-.. rst-class:: logo-container
-
 |pic1|
    .. |pic1| image:: assets/Logo_LCR.png
       :height: 90px
       :class: no-scaled-link
       :alt: Laboratoire Commun de Recherche - HCL-bioMérieux
+
+
+This application was originally developed by the Common Research Laboratory of Edouard Herriot Hospital (Laboratoire Commun de Recherche - HCL-bioMérieux, Lyon, France).
 
 This is not an official bioMérieux or Hospices Civils de Lyon product. The application is provided as is without any warranty.
 
