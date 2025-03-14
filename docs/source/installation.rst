@@ -80,7 +80,7 @@ Import MIMIC-IV full version to your PostgreSQL server
 In order to host the full database, we recommend you following the process below (adapted from mimic-code repository).
 
 .. code-block:: bash
-   
+
    # clone repo
    git clone https://github.com/MIT-LCP/mimic-code.git
    cd mimic-code
@@ -97,6 +97,8 @@ In order to host the full database, we recommend you following the process below
 If you can't use wget, you can download the data manually from `Physionet Repository - MIMIC-IV Clinical Database <https://physionet.org/content/mimic-iv/2.2/>`_ and put the data in the mimiciv/2.2 folder.
 You may need to adapt this sample code depending on your configuration
 
+Last step, you need to install the internal data table needed by MIMICWizard. Install the using the script available `here <_assets/mimicwizard_internal_init.sql>`_
+
 .. tip:: 
 
    Windows user will need to install `gzip <https://gnuwin32.sourceforge.net/packages/gzip.htm>`_ and add gzip and postgresql binaries to the PATH environment variable.
@@ -105,8 +107,6 @@ You may need to adapt this sample code depending on your configuration
 
 Start MIMICWizard
 ******************
-
-Once you've installed the atabase, you need to install the internal data table needed by MIMICWizard. Install the using the script available `here <assets/mimicwizard_internal_init.sql>`_
 
 Now you're database is ready to work with MIMICWizard, configure the correct authentification parameters in the configuration file (details below) to make the final link between database and application.
 
