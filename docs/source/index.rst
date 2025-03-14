@@ -36,14 +36,14 @@ Changelog
 *********
 0.6.4 (2025-03-13) Initial public release
 
-Research and development team
-*****************************
 |pic1|
    .. |pic1| image:: assets/Logo_LCR.png
       :height: 90px
       :class: no-scaled-link
       :alt: Laboratoire Commun de Recherche - HCL-bioMérieux
 
+Research and development team
+*****************************
 
 This application was originally developed by the Common Research Laboratory of Edouard Herriot Hospital (Laboratoire Commun de Recherche - HCL-bioMérieux, Lyon, France).
 
