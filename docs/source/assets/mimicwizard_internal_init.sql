@@ -1,23 +1,6 @@
 DROP SCHEMA IF EXISTS public CASCADE;
 CREATE SCHEMA public;
 
-CREATE TABLE public.cohort (
-	cohort_id float8 NULL,
-	subject_id float8 NULL,
-	hadm_id float8 NULL,
-	stay_id float8 NULL
-);
-
-CREATE TABLE public.customevents (
-	subject_id float8 NULL,
-	hadm_id float8 NULL,
-	stay_id float8 NULL,
-	itemid float8 NULL,
-	value float8 NULL,
-	charttime timestamptz NULL,
-	valueuom text NULL
-);
-
 CREATE SEQUENCE public.d_cohorts_seq
 	INCREMENT BY 1
 	MINVALUE 1
@@ -43,18 +26,47 @@ CREATE SEQUENCE public.users_seq
 	NO CYCLE;
 
 CREATE TABLE public.d_cohorts (
-	cohort_id int4 DEFAULT nextval('d_cohorts_seq'::regclass) NOT NULL,
+	cohort_id int4 DEFAULT nextval('cohort2_cohort_id_seq'::regclass) NOT NULL,
 	cohort_name varchar NULL,
-	cohort_description text NULL
+	cohort_description text NULL,
+	CONSTRAINT cohort2_pk PRIMARY KEY (cohort_id)
 );
-
 CREATE TABLE public.d_customevents (
-	itemid int4 DEFAULT nextval('d_customevents_seq'::regclass) NOT NULL,
+	itemid numeric DEFAULT nextval('customevents_seq'::regclass) NOT NULL,
 	"label" varchar NULL,
 	abbreviation varchar NULL,
 	author varchar NULL,
-	total_row numeric NULL
+	total_row numeric NULL,
+	CONSTRAINT d_customevents_pk PRIMARY KEY (itemid)
 );
+
+CREATE TABLE public.cohort (
+	cohort_id int4 NOT NULL,
+	subject_id int4 NOT NULL,
+	hadm_id int4 NOT NULL,
+	stay_id int4 NOT NULL,
+	CONSTRAINT d_cohorts_pk PRIMARY KEY (cohort_id, subject_id, hadm_id, stay_id),
+	CONSTRAINT d_cohorts_cohort_fk_1 FOREIGN KEY (cohort_id) REFERENCES public.d_cohorts(cohort_id) ON DELETE CASCADE
+);
+CREATE INDEX cohort_stay_id_idx ON public.cohort USING btree (stay_id, cohort_id);
+CREATE INDEX cohort_stay_id_only_idx ON public.cohort USING btree (stay_id);
+
+-- public.customevents definition
+
+CREATE TABLE public.customevents (
+	subject_id int4 NOT NULL,
+	hadm_id int4 NOT NULL,
+	stay_id int4 NULL,
+	itemid int4 NOT NULL,
+	value varchar(20) NULL,
+	charttime timestamp NULL,
+	valueuom varchar NULL,
+	CONSTRAINT customevents_d_customevents_fk FOREIGN KEY (itemid) REFERENCES public.d_customevents(itemid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX customevents_charttime_idx ON public.customevents USING btree (charttime);
+CREATE INDEX customevents_itemid_idx ON public.customevents USING btree (itemid);
+CREATE INDEX customevents_stay_id_charttime_idx ON public.customevents USING btree (stay_id, charttime);
+CREATE INDEX customevents_value_idx ON public.customevents USING btree (value);
 
 CREATE TABLE public.users (
 	user_id int4 DEFAULT nextval('users_seq'::regclass) NOT NULL,
