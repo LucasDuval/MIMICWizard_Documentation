@@ -43,22 +43,13 @@ This application was originally developed by the Common Research Laboratory of E
 
 .. rst-class:: logo-container
 
-|pic1| |pic2| |pic3|
-
+|pic1|
    .. |pic1| image:: assets/Logo_LCR.png
       :height: 90px
       :class: no-scaled-link
-      :alt: Hospices Civils de Lyon logo
+      :alt: Laboratoire Commun de Recherche - HCL-bioMérieux
 
-   .. |pic2| image:: assets/LogoHCL.jpg
-      :height: 90px
-      :class: no-scaled-link
-      :alt: Hospices Civils de Lyon logo
-
-   .. |pic3| image:: assets/bm_logo_circle_rgb.png
-      :height: 130px
-      :class: no-scaled-link
-      :alt: bioMérieux logo
+This is not an official bioMérieux or Hospices Civils de Lyon product. The application is provided as is without any warranty.
 
 The app is provided under open-source GNU GPLv3 licence. All contributions and suggestions are welcome. Learn more about contribution in our dedicated GitHub page.
 
