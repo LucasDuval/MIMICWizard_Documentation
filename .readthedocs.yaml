@@ -13,5 +13,5 @@ sphinx:
   configuration: docs/source/conf.py
   builder: "dirhtml"
 
-include:
-  - docs/source/assets/
+extra_files:
+  - docs/source/assets/mimicwizard_internal_init.sql
