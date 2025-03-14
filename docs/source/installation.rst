@@ -97,7 +97,7 @@ In order to host the full database, we recommend you following the process below
 If you can't use wget, you can download the data manually from `Physionet Repository - MIMIC-IV Clinical Database <https://physionet.org/content/mimic-iv/2.2/>`_ and put the data in the mimiciv/2.2 folder.
 You may need to adapt this sample code depending on your configuration
 
-Last step, you need to install the internal data table needed by MIMICWizard. Install the using the script available `here <_assets/mimicwizard_internal_init.sql>`_
+Last step, **you need to install the internal data tables needed by MIMICWizard** with the script available `here <assets/mimicwizard_internal_init.sql>`_
 
 .. tip:: 
 
