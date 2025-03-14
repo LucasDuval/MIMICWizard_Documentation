@@ -100,7 +100,7 @@ You may need to adapt this sample code depending on your configuration
 Last step, **you need to install the internal data tables needed by MIMICWizard** with the script available `here <https://github.com/LucasDuval/MIMICWizard_Documentation/blob/main/docs/source/assets/mimicwizard_internal_init.sql>`_
 
 .. code-block:: bash
-   
+
    psql -d mimiciv -f mimicwizard_internal_init.sql
 
 .. tip:: 
@@ -108,6 +108,12 @@ Last step, **you need to install the internal data tables needed by MIMICWizard*
    Windows user will need to install `gzip <https://gnuwin32.sourceforge.net/packages/gzip.htm>`_ and add gzip and postgresql binaries to the PATH environment variable.
    Postgres run command with your windows user as default, you should add the argument `-U postgres` to use the default postgres user.
    If you have any trouble with installation you can refer to the original MIMIC Documentation `Buid MIMIC (from mimic-code) <https://github.com/MIT-LCP/mimic-code/tree/main/mimic-iv/buildmimic/postgres>`_
+
+.. warning::
+
+   The database is quite large and the importation process can take a long time. 
+   Make sure you have enough space on your hard drive and that your computer is plugged in.
+   Some command may take a long time to execute and the process may seems blocked, be patient.
 
 Start MIMICWizard
 ******************
