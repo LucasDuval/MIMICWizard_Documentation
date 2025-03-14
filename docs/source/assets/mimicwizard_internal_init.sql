@@ -1173,6 +1173,103 @@ AS SELECT "...1".itemid,
           GROUP BY q01.itemid, q01.label) "...4" ON "...1".itemid = "...4".itemid AND "...1".label::text = "...4".label::text
 WITH DATA;
 
+-- public.uid_list source
+
+CREATE MATERIALIZED VIEW public.uid_list
+TABLESPACE pg_default
+AS SELECT DISTINCT q01.type,
+    q01.uid
+   FROM ( SELECT 'subject_id'::text AS type,
+            q01_1.subject_id AS uid
+           FROM ( SELECT patients.subject_id,
+                    admissions.hadm_id,
+                    icustays.stay_id
+                   FROM mimiciv_hosp.patients
+                     LEFT JOIN mimiciv_hosp.admissions ON patients.subject_id = admissions.subject_id
+                     LEFT JOIN mimiciv_icu.icustays ON patients.subject_id = icustays.subject_id AND admissions.hadm_id = icustays.hadm_id) q01_1
+        UNION ALL
+         SELECT 'hadm_id'::text AS type,
+            q01_1.hadm_id AS uid
+           FROM ( SELECT patients.subject_id,
+                    admissions.hadm_id,
+                    icustays.stay_id
+                   FROM mimiciv_hosp.patients
+                     LEFT JOIN mimiciv_hosp.admissions ON patients.subject_id = admissions.subject_id
+                     LEFT JOIN mimiciv_icu.icustays ON patients.subject_id = icustays.subject_id AND admissions.hadm_id = icustays.hadm_id) q01_1
+        UNION ALL
+         SELECT 'stay_id'::text AS type,
+            q01_1.stay_id AS uid
+           FROM ( SELECT patients.subject_id,
+                    admissions.hadm_id,
+                    icustays.stay_id
+                   FROM mimiciv_hosp.patients
+                     LEFT JOIN mimiciv_hosp.admissions ON patients.subject_id = admissions.subject_id
+                     LEFT JOIN mimiciv_icu.icustays ON patients.subject_id = icustays.subject_id AND admissions.hadm_id = icustays.hadm_id) q01_1) q01
+  WHERE q01.uid IS NOT NULL
+  ORDER BY q01.uid
+WITH DATA;
+
+
+
+
+-- public.microbiologyresultsevents source
+
+CREATE MATERIALIZED VIEW public.microbiologyresultsevents
+TABLESPACE pg_default
+AS SELECT m.subject_id,
+    m.hadm_id,
+    NULL::integer AS stay_id,
+    m.test_itemid AS itemid,
+    'microbiologyevents'::text AS linksto,
+        CASE
+            WHEN m.charttime IS NOT NULL THEN m.charttime
+            ELSE m.chartdate
+        END AS charttime,
+    m.spec_type_desc,
+    m.test_name AS label,
+    m.org_name AS value,
+        CASE
+            WHEN m.org_name::text ~~ 'NEGATIVE%'::text OR m.org_name::text = 'CANCELLED'::text THEN 0
+            ELSE 1
+        END AS valuenum,
+    m.microevent_id,
+    ''::character varying(20) AS valueuom
+   FROM mimiciv_hosp.microbiologyevents m
+  WHERE m.org_name IS NOT NULL
+UNION
+ SELECT m.subject_id,
+    m.hadm_id,
+    NULL::integer AS stay_id,
+    m.test_itemid AS itemid,
+    'microbiologyevents'::text AS linksto,
+        CASE
+            WHEN m.charttime IS NOT NULL THEN m.charttime
+            ELSE m.chartdate
+        END AS charttime,
+    m.spec_type_desc,
+    m.test_name AS label,
+    m.comments AS value,
+        CASE
+            WHEN m.comments ~~ 'POSITIVE%'::text THEN 1
+            ELSE 0
+        END AS valuenum,
+    m.microevent_id,
+    ''::character varying(20) AS valueuom
+   FROM mimiciv_hosp.microbiologyevents m
+  WHERE m.org_name IS NULL AND (upper(m.comments) ~~ 'POSITIVE%'::text OR upper(m.comments) ~~ 'NEGATIVE%'::text)
+WITH DATA;
+
+-- public.d_prescriptions source
+
+CREATE MATERIALIZED VIEW public.d_prescriptions
+TABLESPACE pg_default
+AS SELECT 1000000 + row_number() OVER (ORDER BY q01.drug) AS itemid,
+    q01.drug
+   FROM ( SELECT DISTINCT prescriptions.drug
+           FROM mimiciv_hosp.prescriptions
+          ORDER BY prescriptions.drug) q01
+WITH DATA;
+
 -- public.static_distinct_events source
 
 CREATE MATERIALIZED VIEW public.static_distinct_events
@@ -1252,43 +1349,6 @@ AS SELECT cq.itemid,
            FROM d_prescriptions) cq
 WITH DATA;
 
--- public.uid_list source
-
-CREATE MATERIALIZED VIEW public.uid_list
-TABLESPACE pg_default
-AS SELECT DISTINCT q01.type,
-    q01.uid
-   FROM ( SELECT 'subject_id'::text AS type,
-            q01_1.subject_id AS uid
-           FROM ( SELECT patients.subject_id,
-                    admissions.hadm_id,
-                    icustays.stay_id
-                   FROM mimiciv_hosp.patients
-                     LEFT JOIN mimiciv_hosp.admissions ON patients.subject_id = admissions.subject_id
-                     LEFT JOIN mimiciv_icu.icustays ON patients.subject_id = icustays.subject_id AND admissions.hadm_id = icustays.hadm_id) q01_1
-        UNION ALL
-         SELECT 'hadm_id'::text AS type,
-            q01_1.hadm_id AS uid
-           FROM ( SELECT patients.subject_id,
-                    admissions.hadm_id,
-                    icustays.stay_id
-                   FROM mimiciv_hosp.patients
-                     LEFT JOIN mimiciv_hosp.admissions ON patients.subject_id = admissions.subject_id
-                     LEFT JOIN mimiciv_icu.icustays ON patients.subject_id = icustays.subject_id AND admissions.hadm_id = icustays.hadm_id) q01_1
-        UNION ALL
-         SELECT 'stay_id'::text AS type,
-            q01_1.stay_id AS uid
-           FROM ( SELECT patients.subject_id,
-                    admissions.hadm_id,
-                    icustays.stay_id
-                   FROM mimiciv_hosp.patients
-                     LEFT JOIN mimiciv_hosp.admissions ON patients.subject_id = admissions.subject_id
-                     LEFT JOIN mimiciv_icu.icustays ON patients.subject_id = icustays.subject_id AND admissions.hadm_id = icustays.hadm_id) q01_1) q01
-  WHERE q01.uid IS NOT NULL
-  ORDER BY q01.uid
-WITH DATA;
-
-
 -- public.distinct_events source
 
 CREATE OR REPLACE VIEW public.distinct_events
@@ -1305,61 +1365,3 @@ UNION ALL
     'customevents'::character varying AS linksto,
     dc.author AS param_type
    FROM d_customevents dc;
-
--- public.microbiologyresultsevents source
-
-CREATE MATERIALIZED VIEW public.microbiologyresultsevents
-TABLESPACE pg_default
-AS SELECT m.subject_id,
-    m.hadm_id,
-    NULL::integer AS stay_id,
-    m.test_itemid AS itemid,
-    'microbiologyevents'::text AS linksto,
-        CASE
-            WHEN m.charttime IS NOT NULL THEN m.charttime
-            ELSE m.chartdate
-        END AS charttime,
-    m.spec_type_desc,
-    m.test_name AS label,
-    m.org_name AS value,
-        CASE
-            WHEN m.org_name::text ~~ 'NEGATIVE%'::text OR m.org_name::text = 'CANCELLED'::text THEN 0
-            ELSE 1
-        END AS valuenum,
-    m.microevent_id,
-    ''::character varying(20) AS valueuom
-   FROM mimiciv_hosp.microbiologyevents m
-  WHERE m.org_name IS NOT NULL
-UNION
- SELECT m.subject_id,
-    m.hadm_id,
-    NULL::integer AS stay_id,
-    m.test_itemid AS itemid,
-    'microbiologyevents'::text AS linksto,
-        CASE
-            WHEN m.charttime IS NOT NULL THEN m.charttime
-            ELSE m.chartdate
-        END AS charttime,
-    m.spec_type_desc,
-    m.test_name AS label,
-    m.comments AS value,
-        CASE
-            WHEN m.comments ~~ 'POSITIVE%'::text THEN 1
-            ELSE 0
-        END AS valuenum,
-    m.microevent_id,
-    ''::character varying(20) AS valueuom
-   FROM mimiciv_hosp.microbiologyevents m
-  WHERE m.org_name IS NULL AND (upper(m.comments) ~~ 'POSITIVE%'::text OR upper(m.comments) ~~ 'NEGATIVE%'::text)
-WITH DATA;
-
--- public.d_prescriptions source
-
-CREATE MATERIALIZED VIEW public.d_prescriptions
-TABLESPACE pg_default
-AS SELECT 1000000 + row_number() OVER (ORDER BY q01.drug) AS itemid,
-    q01.drug
-   FROM ( SELECT DISTINCT prescriptions.drug
-           FROM mimiciv_hosp.prescriptions
-          ORDER BY prescriptions.drug) q01
-WITH DATA;
