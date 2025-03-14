@@ -45,7 +45,7 @@ There's now two choices :
 
 * `Use  MIMIC-IV demo <Import MIMIC-IV demo to your PostgreSQL server_>`_ 
 
-* `Use  MIMIC-IV demo <Import MIMIC-IV full version to your PostgreSQL server_>`_ 
+* `Use  MIMIC-IV full version <Import MIMIC-IV full version to your PostgreSQL server_>`_ 
 
 
 Import MIMIC-IV demo to your PostgreSQL server
@@ -80,6 +80,7 @@ Import MIMIC-IV full version to your PostgreSQL server
 In order to host the full database, we recommend you following the process below (adapted from mimic-code repository).
 
 .. code-block:: bash
+   
    # clone repo
    git clone https://github.com/MIT-LCP/mimic-code.git
    cd mimic-code

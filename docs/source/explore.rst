@@ -73,7 +73,7 @@ Create a retrospective cohort from MIMIC patients (Cohort creation)
       :class: no-scaled-link
 
       Cohort generation module which is generating a cohort with patient with median value of Blood Pressure < 70 
-      during the first 24 hours of the stay and with creatinine measurement taken 24 hours before or after ICU stay start
+      during the first 24 hours of the ICU stay and with creatinine measurement taken 24 hours before or after ICU stay start
 
 The cohort generation module help you to create cohort based on event occurence. You can apply a combination of event and restrict on :
 
@@ -91,7 +91,7 @@ Explore a created cohort
 
 Your cohort is now persisted in the database and you want to explore it, you're at the right place.
 You can select the cohort you want to visualize using the selector at the top right of your dashboard. If you cannot see a freshly created cohort, don't hesitate to press the refresh button next to it to import new cohort. 
-If you cannot see a cohort, please make sure it's integrated in you cohort profile (`see more about profile <Define your profile to navigate faster_>`_).
+If you cannot see a cohort and you're not using the default profile, please make sure it's integrated in you cohort profile (`see more about profile <Define your profile to navigate faster_>`_).
 
 The cohort explorer tab is divided in 3 pages
 
