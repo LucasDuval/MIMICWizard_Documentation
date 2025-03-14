@@ -99,6 +99,10 @@ You may need to adapt this sample code depending on your configuration
 
 Last step, **you need to install the internal data tables needed by MIMICWizard** with the script available `here <https://github.com/LucasDuval/MIMICWizard_Documentation/blob/main/docs/source/assets/mimicwizard_internal_init.sql>`_
 
+.. code-block:: bash
+   
+   psql -d mimiciv -f mimicwizard_internal_init.sql
+
 .. tip:: 
 
    Windows user will need to install `gzip <https://gnuwin32.sourceforge.net/packages/gzip.htm>`_ and add gzip and postgresql binaries to the PATH environment variable.
