@@ -103,8 +103,7 @@ Last step, **you need to install the internal data tables needed by MIMICWizard*
 
    psql -d mimiciv -f mimicwizard_internal_init.sql
 
-*(Optionnal) : You can find additional index to speed up MIMICWizard in a dedicated file `here <https://github.com/LucasDuval/MIMICWizard_Documentation/blob/main/docs/source/assets/mimicwizard_internal_init.sql>`_*
-
+*(Optionnal) : You can find additional index to speed up MIMICWizard in a dedicated file* `here <https://github.com/LucasDuval/MIMICWizard_Documentation/blob/main/docs/source/assets/mimicwizard_internal_init.sql>`_
 *You can run it in the same way as the previous script* 
 
 .. tip:: 
