@@ -20,7 +20,7 @@ B. Install the PostgreSQL server and import MIMIC-IV database
    * Import the MIMIC-IV database (demo or full version)
    * Import MIMICWizard internal schema
 
-C. C. Configure and start MIMICWizard
+C. Configure and start MIMICWizard
    
    * Configure the application configuration file
    * Run the application
@@ -77,7 +77,7 @@ There's now two choices :
 
 
 Import MIMIC-IV demo to your PostgreSQL server
-================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 * Download the MIMIC-IV demo database available on the `Physionet Repository - MIMIC-IV Clinical Database demo <https://physionet.org/content/mimic-iv-demo/>`_ (the download button is at the bottom of the page).
 * Unzip the database in the demo folder at the MIMICWizard root repository
 
@@ -103,7 +103,7 @@ If it's the case that's perfect, you just have to run ``PostgreSQLPortable.exe``
    Use the Init Demo procedure on the application homepage the first time you connect to the database with MIMICWizard. This procedure will use the file in the demo folder to populate your database. Once it has been done one time, you could use the run demo procedure.
 
 Import MIMIC-IV full version to your PostgreSQL server
-========================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 In order to host the full database, we recommend you following the process below (adapted from mimic-code repository).
 
 .. code-block:: bash
@@ -125,7 +125,7 @@ If you can't use wget, you can download the data manually from `Physionet Reposi
 You may need to adapt this sample code depending on your configuration
 
 Import MIMICWizard internal table to your PostgreSQL server
-==========================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Last step, **you need to install the internal data tables needed by MIMICWizard** with the script available `here <https://github.com/biomerieux-open-sources/mimicwizard/blob/main/installation/schema.sql>`_
 
@@ -147,12 +147,12 @@ Last step, **you need to install the internal data tables needed by MIMICWizard*
    Some command may take a long time to execute and the process may seems blocked, be patient.
 
 C. Configure and start MIMICWizard
-******************
+***********************************
 
 Now you're database is ready to work with MIMICWizard, configure the correct authentification parameters in the configuration file to make the final link between database and application.
 
 Configuration file
-==================
+^^^^^^^^^^^^^^^^^^
 
 The configuration file is located at the root of MIMIWizard folder. This file is named ``global.R`` and store all the configuration options.
 
@@ -209,7 +209,8 @@ D. Extend and optimize the application (Optionnal)
 
 
 Extra SQL index :
-=================
+^^^^^^^^^^^^^^^^^
+SQL index are used to speed up the application by allowing the database to quickly find the data it needs.
 You can find additional index to speed up MIMICWizard in a dedicated file `here <https://github.com/biomerieux-open-sources/mimicwizard/blob/main/installation/extra_index.sql>`_.
 You can run this script in your database with the command :
 
@@ -219,7 +220,7 @@ You can run this script in your database with the command :
 
 
 Add microbiology supplementary data to the application
-======================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As stated in the original research paper associated with the application, we curated a list of pathogens referenced in the MIMIC-IV database and added their classification in the application.
 Theses additional data add information about the type of pathogens (Virus, Bacteria, Fungus or Parasitis) tested for a patient.
@@ -235,7 +236,7 @@ Add this supplementary data to your application by running the following command
 
 
 Host the application on your infrastructure
-============================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You can host MIMICWizard using `Posit Shiny Server <https://posit.co/download/shiny-server/>`_ 
 
 They provide a detailed documentation about how to deploy a Shiny Application in their `Administrator Guide <https://docs.posit.co/shiny-server/>`_
