@@ -5,25 +5,32 @@ You'll find here information about how to make MIMICWizard work on your computer
 
 Before starting you should keep in mind that MIMICWizard is divided in 2 part, the **application** run with R-Shiny and the **database** run with PostgreSQL
 
-TL;DR :
+TL;DR
 ========
 
-A. 
-* Install R 4.4 and Rtools (Windows only)
-* Clone the MIMICWizard repository from GitHub
-* Install the required R packages using renv
-B. 
-* Install PostgreSQL server
-* Import the MIMIC-IV database (demo or full version)
-* Import MIMICWizard internal schema
-C. 
-* Configure the application configuration file
-* Run the application
-D. (Optionnal)
-* Add additional index to speed up the application
-* Add microbiology supplementary data to the application
+A. Install the application
 
-A. Install the local application (Run from RStudio or R CLI)
+   * Install R 4.4 and Rtools (Windows only)
+   * Clone the MIMICWizard repository from GitHub
+   * Install the required R packages using renv
+
+B. Install the PostgreSQL server and import MIMIC-IV database
+   
+   * Install PostgreSQL server
+   * Import the MIMIC-IV database (demo or full version)
+   * Import MIMICWizard internal schema
+
+C. C. Configure and start MIMICWizard
+   
+   * Configure the application configuration file
+   * Run the application
+
+D. Extend and optimize the application (Optionnal)
+
+   * Add additional index to speed up the application
+   * Add microbiology supplementary data to the application
+
+A. Install the application (Run from RStudio or R CLI)
 *********************************************************
 *Theses instructions are the simplest way to get MIMICWizard running, but it's not the way it is intended to be hosted and distributd to multiple users in your organization*
 
