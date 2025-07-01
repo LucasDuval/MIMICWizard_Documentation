@@ -9,11 +9,22 @@ Add new custom event to the application
 A User Interface has been developed to add custom event directly throught the application.
 You can find this interface in the ``Developper settings`` panel.
 
+From a CSV file
+++++++++++++++++
+
 You need to provide a event label, abbreviation and a csv (separator ``,``) including the following column :
 
 +------------+---------+---------+-----------+-------+----------+
 | subject_id | hadm_id | stay_id | charttime | value | valueuom |
 +------------+---------+---------+-----------+-------+----------+
+
+Directly from the database
++++++++++++++++++++++++++
+
+You can also add a new event directly from a table in the database from the menu ``Create custom events from database`` in the ``Developper settings`` panel.
+You'll need to bind each column to the required fields.
+If your table contains only stay_id or hadm_id, it can be automatically imputed using the checkboxs below the field selection.
+
 
 Populate application with externally computed cohort
 ****************************************************

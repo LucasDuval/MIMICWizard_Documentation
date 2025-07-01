@@ -93,11 +93,38 @@ Your cohort is now persisted in the database and you want to explore it, you're 
 You can select the cohort you want to visualize using the selector at the top right of your dashboard. If you cannot see a freshly created cohort, don't hesitate to press the refresh button next to it to import new cohort. 
 If you cannot see a cohort and you're not using the default profile, please make sure it's integrated in you cohort profile (`see more about profile <Define your profile to navigate faster_>`_).
 
-The cohort explorer tab is divided in 3 pages
+The cohort explorer tab is divided in 4 modules : 
 
+- **Cohort outcomes explorer** : explore the outcomes of your cohort, such as mortality, length of stay, etc.
 - **Cohort parameter explorer** : explore the evolution of an event of interest in the database
 - **Cohort patient explorer** : explore each individual patient in the selected cohort
 - **Clinical data desc.** : get some detailled statistics about multiple selected parameters in your cohort.
+
+
+Cohort outcomes explorer
++++++++++++++++++++++++++
+
+The cohort outcomes explorer tab is used to explore the outcomes of your cohort. 
+It can be used to observe the mortality rate, length of stay, and other statistics about your cohort.
+You can also, at the bottom of the page stratify your cohort to observe differences between up-to 6 subgroups.
+
+.. list-table::
+   :widths: 50 50
+   :header-rows: 0
+
+   * - .. figure:: assets/cohort_outcomes_table.png
+          :width: 100%
+          :class: no-scaled-link
+
+          Cohort outcomes table summarizing the cohort outcomes, statistics and p-value when cohort is stratified
+
+     - .. figure:: assets/cohort_outcomes_graph.png
+          :width: 100%
+          :class: no-scaled-link
+
+          Visualize cohort outcomes with graphs
+
+
 
 Cohort parameter explorer
 +++++++++++++++++++++++++
@@ -117,7 +144,7 @@ Cohort parameter explorer tab offer you the possibilitiy to draw 3 types of plot
 - Longitudinal trajectory (median/Q1-Q3)
 
 You can choose how which time range to observe and how data should be aggregated for a patient in a time step *(min, max, median, mean, sum)*.
-From this panel, you can also send data in the clinical desc. module to get a statistical overview of your parameter.
+From this panel, you can also **send data in the clinical desc. module** to get a statistical overview of your parameter.
 
 Sub-stratify a cohort
 =====================

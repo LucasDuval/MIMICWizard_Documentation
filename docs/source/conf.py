@@ -2,13 +2,13 @@
 
 # -- Project information
 
-project = 'MIMIC Wizard'
+project = 'MIMICWizard'
 copyright = 'GNU GPLv3'
 author = 'Lucas DUVAL'
 
 language = 'en'
-release = '0.6.4'
-version = '0.6.4'
+release = '0.7.1'
+version = '0.7.1'
 
 # -- General configuration
 

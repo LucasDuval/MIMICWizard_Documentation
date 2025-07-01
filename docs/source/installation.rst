@@ -5,7 +5,21 @@ You'll find here information about how to make MIMICWizard work on your computer
 
 Before starting you should keep in mind that MIMICWizard is divided in 2 part, the **application** run with R-Shiny and the **database** run with PostgreSQL
 
-Install the local application (Run from RStudio or R CLI)
+TL;DR :
+========
+
+1. A. Install R 4.4 and Rtools (Windows only)
+2. A. Clone the MIMICWizard repository from GitHub
+3. A. Install the required R packages using renv
+4. B. Install PostgreSQL server
+5. B. Import the MIMIC-IV database (demo or full version)
+6. B. Import MIMICWizard internal schema
+7. C. Configure the application configuration file
+8. C. Run the application
+9. D. (Optionnal) Add additional index to speed up the application
+10. D. (Optionnal) Add microbiology supplementary data to the application
+
+A. Install the local application (Run from RStudio or R CLI)
 *********************************************************
 *Theses instructions are the simplest way to get MIMICWizard running, but it's not the way it is intended to be hosted and distributd to multiple users in your organization*
 
@@ -13,13 +27,13 @@ You can download the MIMICWizard **source code** using git or directly by zip do
 
 .. code-block:: bash
 
-   git clone <not_available_yet>
+   git clone https://github.com/biomerieux-open-sources/mimicwizard.git
 
 In order to install the app, you'll need to have **R 4.4** installed `R official repository (CRAN) <https://cran.r-project.org/mirrors.html>`_ 
 
 For Windows user, you need to install Rtools to compile some of the packages, available on the `Rtools official repository <https://cran.r-project.org/bin/windows/Rtools/>`_
 
-Once R is installed, open a terminal in the project directory (i.e. in the app/ folder) and run the following command to install the required packages :
+Once R is installed, open a terminal in the project directory and run the following command to install the required packages :
 
 .. code-block:: bash
 
@@ -29,6 +43,9 @@ Once R is installed, open a terminal in the project directory (i.e. in the app/ 
 This step should take a few minutes, go grab a coffee ☕ 
 
 Your coffee is finished but the package installation is still ongoing ? Don't worry, you can carry to the next step and let the installation finish in the background.
+
+B. Install the PostgreSQL server and import MIMIC-IV database
+***************************************************************
 
 Now you need to install the **PostgreSQL server** that will hold the database. 
 
@@ -48,8 +65,8 @@ There's now two choices :
 * `Use  MIMIC-IV full version <Import MIMIC-IV full version to your PostgreSQL server_>`_ 
 
 
-Import MIMIC-IV demo to your PostgreSQL server
-**********************************************
+ Import MIMIC-IV demo to your PostgreSQL server
+==================================================
 
 * Download the MIMIC-IV demo database available on the `Physionet Repository - MIMIC-IV Clinical Database demo <https://physionet.org/content/mimic-iv-demo/>`_ (the download button is at the bottom of the page).
 * Unzip the database in the demo folder at the MIMICWizard root repository
@@ -76,7 +93,7 @@ If it's the case that's perfect, you just have to run ``PostgreSQLPortable.exe``
    Use the Init Demo procedure on the application homepage the first time you connect to the database with MIMICWizard. This procedure will use the file in the demo folder to populate your database. Once it has been done one time, you could use the run demo procedure.
 
 Import MIMIC-IV full version to your PostgreSQL server
-******************************************************
+========================================================
 In order to host the full database, we recommend you following the process below (adapted from mimic-code repository).
 
 .. code-block:: bash
@@ -97,14 +114,15 @@ In order to host the full database, we recommend you following the process below
 If you can't use wget, you can download the data manually from `Physionet Repository - MIMIC-IV Clinical Database <https://physionet.org/content/mimic-iv/2.2/>`_ and put the data in the mimiciv/2.2 folder.
 You may need to adapt this sample code depending on your configuration
 
-Last step, **you need to install the internal data tables needed by MIMICWizard** with the script available `here <https://github.com/LucasDuval/MIMICWizard_Documentation/blob/main/docs/source/assets/mimicwizard_internal_init.sql>`_
+Import MIMICWizard internal table to your PostgreSQL server
+==========================================================
+
+Last step, **you need to install the internal data tables needed by MIMICWizard** with the script available `here <https://github.com/biomerieux-open-sources/mimicwizard/blob/main/installation/schema.sql>`_
 
 .. code-block:: bash
 
    psql -d mimiciv -f mimicwizard_internal_init.sql
 
-*(Optionnal) : You can find additional index to speed up MIMICWizard in a dedicated file* `here <https://github.com/LucasDuval/MIMICWizard_Documentation/blob/main/docs/source/assets/extra_index.sql>`_.
-*You can run it in the same way as the previous script* 
 
 .. tip:: 
 
@@ -118,22 +136,14 @@ Last step, **you need to install the internal data tables needed by MIMICWizard*
    Make sure you have enough space on your hard drive and that your computer is plugged in.
    Some command may take a long time to execute and the process may seems blocked, be patient.
 
-Start MIMICWizard
+C. Configure and start MIMICWizard
 ******************
 
-Now you're database is ready to work with MIMICWizard, configure the correct authentification parameters in the configuration file (details below) to make the final link between database and application.
-
-Once all the packages are downloaded and installed, database is loaded, and `configuration file <Configuration file_>`_ configured, **MIMICWizard is ready**. 
-
-**Make sure your database is running**, cd to the app directory and run :
-
-.. code-block:: bash
-
-   R -e "shiny::runApp()"
-
+Now you're database is ready to work with MIMICWizard, configure the correct authentification parameters in the configuration file to make the final link between database and application.
 
 Configuration file
-*************************
+==================
+
 The configuration file is located at the root of MIMIWizard folder. This file is named ``global.R`` and store all the configuration options.
 
 
@@ -175,8 +185,47 @@ The configuration file is located at the root of MIMIWizard folder. This file is
 +----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
+Once all the packages are downloaded and installed, database is loaded, and configuration file is set-up, **MIMICWizard is ready**. 
+
+**Make sure your database is running**, cd to the app directory and run :
+
+.. code-block:: bash
+
+   R -e "shiny::runApp()"
+
+
+D. Extend and optimize the application (Optionnal)
+**************************************************
+
+
+Extra SQL index :
+=================
+You can find additional index to speed up MIMICWizard in a dedicated file `here <https://github.com/biomerieux-open-sources/mimicwizard/blob/main/installation/extra_index.sql>`_.
+You can run this script in your database with the command :
+
+.. code-block:: bash
+
+   psql -d mimiciv -f extra_index.sql
+
+
+Add microbiology supplementary data to the application
+======================================================
+
+As stated in the original research paper associated with the application, we curated a list of pathogens referenced in the MIMIC-IV database and added their classification in the application.
+Theses additional data add information about the type of pathogens (Virus, Bacteria, Fungus or Parasitis) tested for a patient.
+It helps to better understand the patient state and the treatment that has been administrated and can be used to stratify or create cohort.
+
+You can find supplementary data in a dedicated file `here <https://github.com/biomerieux-open-sources/mimicwizard/blob/main/installation/additional.sql>` 
+
+Add this supplementary data to your application by running the following command in your database :
+
+.. code-block:: bash
+
+   psql -d mimiciv -f additional.sql
+
+
 Host the application on your infrastructure
-*********************************************************
+============================================
 You can host MIMICWizard using `Posit Shiny Server <https://posit.co/download/shiny-server/>`_ 
 
 They provide a detailed documentation about how to deploy a Shiny Application in their `Administrator Guide <https://docs.posit.co/shiny-server/>`_
