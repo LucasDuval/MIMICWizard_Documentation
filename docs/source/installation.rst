@@ -8,16 +8,20 @@ Before starting you should keep in mind that MIMICWizard is divided in 2 part, t
 TL;DR :
 ========
 
-1. A. Install R 4.4 and Rtools (Windows only)
-2. A. Clone the MIMICWizard repository from GitHub
-3. A. Install the required R packages using renv
-4. B. Install PostgreSQL server
-5. B. Import the MIMIC-IV database (demo or full version)
-6. B. Import MIMICWizard internal schema
-7. C. Configure the application configuration file
-8. C. Run the application
-9. D. (Optionnal) Add additional index to speed up the application
-10. D. (Optionnal) Add microbiology supplementary data to the application
+A. 
+* Install R 4.4 and Rtools (Windows only)
+* Clone the MIMICWizard repository from GitHub
+* Install the required R packages using renv
+B. 
+* Install PostgreSQL server
+* Import the MIMIC-IV database (demo or full version)
+* Import MIMICWizard internal schema
+C. 
+* Configure the application configuration file
+* Run the application
+D. (Optionnal)
+* Add additional index to speed up the application
+* Add microbiology supplementary data to the application
 
 A. Install the local application (Run from RStudio or R CLI)
 *********************************************************
@@ -67,7 +71,6 @@ There's now two choices :
 
  Import MIMIC-IV demo to your PostgreSQL server
 ==================================================
-
 * Download the MIMIC-IV demo database available on the `Physionet Repository - MIMIC-IV Clinical Database demo <https://physionet.org/content/mimic-iv-demo/>`_ (the download button is at the bottom of the page).
 * Unzip the database in the demo folder at the MIMICWizard root repository
 
