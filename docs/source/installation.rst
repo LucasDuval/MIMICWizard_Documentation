@@ -69,8 +69,8 @@ There's now two choices :
 * `Use  MIMIC-IV full version <Import MIMIC-IV full version to your PostgreSQL server_>`_ 
 
 
- Import MIMIC-IV demo to your PostgreSQL server
-==================================================
+Import MIMIC-IV demo to your PostgreSQL server
+================================================
 * Download the MIMIC-IV demo database available on the `Physionet Repository - MIMIC-IV Clinical Database demo <https://physionet.org/content/mimic-iv-demo/>`_ (the download button is at the bottom of the page).
 * Unzip the database in the demo folder at the MIMICWizard root repository
 
