@@ -34,11 +34,9 @@ You can follow the installation instructions on the getting started page.
 
 Changelog
 *********
-v0.7.1 (2025-06-27) Bugfixes and optimization
-
-v0.7.0 (2025-06-20) Public release associated with online demo version
-
-v0.6.4 (2025-03-13) First closed full version beta-testing
+* **v0.7.1 (2025-06-27)** : Bugfixes and optimization
+* **v0.7.0 (2025-06-20)** : Public release associated with online demo version
+* **v0.6.4 (2025-03-13)** : Initial public release
 
 |pic1|
    .. |pic1| image:: assets/Logo_LCR.png
