@@ -6,7 +6,7 @@ You'll find here information about how to make MIMICWizard work on your computer
 Before starting you should keep in mind that MIMICWizard is divided in 2 part, the **application** run with R-Shiny and the **database** run with PostgreSQL
 
 TL;DR
-========
+*****
 
 A. Install the application
 
